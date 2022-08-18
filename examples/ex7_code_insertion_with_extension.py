@@ -39,8 +39,6 @@ import logging
 import os
 import tempfile
 
-import ofrak_binary_ninja
-import ofrak_components_capstone
 from ofrak import OFRAK, OFRAKContext, Resource, ResourceFilter, ResourceAttributeValueFilter
 from ofrak.core import (
     ProgramAttributes,
@@ -66,6 +64,8 @@ from ofrak_patch_maker.toolchain.version import ToolchainVersion
 from ofrak_type.bit_width import BitWidth
 from ofrak_type.endianness import Endianness
 from ofrak_type.memory_permissions import MemoryPermissions
+
+import ofrak_ghidra
 
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "assets"))
 BINARY_FILE = os.path.join(ASSETS_DIR, "example_program")
@@ -245,6 +245,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ofrak = OFRAK()
-    ofrak.discover(ofrak_components_capstone)
-    ofrak.discover(ofrak_binary_ninja)
+    ofrak.discover(ofrak_ghidra)
     ofrak.run(main, args.hello_world_file, args.output_file_name)

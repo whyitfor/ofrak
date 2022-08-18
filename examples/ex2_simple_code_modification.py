@@ -12,7 +12,7 @@ int main() {
 ```
 
 The example performs code modification in the input binary (without extension). It leverages
-BinaryNinja to analyze the executable binary, and Keystone to rewrite an instruction so that the
+Ghidra to analyze the executable binary, and Keystone to rewrite an instruction so that the
 binary loops back to its beginning instead of returning and exiting at the end of the main function.
 
 Someone is chasing its tail and never catching it 😹
@@ -20,8 +20,6 @@ Someone is chasing its tail and never catching it 😹
 import argparse
 import os
 
-import ofrak_binary_ninja
-import ofrak_components_capstone
 from ofrak import OFRAK, OFRAKContext, ResourceFilter, ResourceAttributeValueFilter
 from ofrak.core import (
     ProgramAttributes,
@@ -31,6 +29,8 @@ from ofrak.core import (
     Instruction,
 )
 from ofrak.service.assembler.assembler_service_keystone import KeystoneAssemblerService
+
+import ofrak_ghidra
 
 ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "assets"))
 BINARY_FILE = os.path.join(ASSETS_DIR, "example_program")
@@ -88,6 +88,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ofrak = OFRAK()
-    ofrak.injector.discover(ofrak_components_capstone)
-    ofrak.injector.discover(ofrak_binary_ninja)
+    ofrak.injector.discover(ofrak_ghidra)
     ofrak.run(main, args.hello_world_file, args.output_file_name)

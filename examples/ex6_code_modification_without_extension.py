@@ -40,7 +40,6 @@ import logging
 import os
 import tempfile
 
-import ofrak_binary_ninja
 from ofrak import OFRAK, OFRAKContext, ResourceFilter, ResourceAttributeValueFilter
 from ofrak.core import ProgramAttributes, ComplexBlock
 from ofrak_patch_maker.model import PatchRegionConfig
@@ -53,6 +52,8 @@ from ofrak_patch_maker.toolchain.model import (
 )
 from ofrak_patch_maker.toolchain.version import ToolchainVersion
 from ofrak_type.memory_permissions import MemoryPermissions
+
+import ofrak_ghidra
 
 PAGE_ALIGN = 0x1000
 BINARY_FILE = "./src/example_6/program_kitteh"
@@ -176,5 +177,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ofrak = OFRAK()
-    ofrak.discover(ofrak_binary_ninja)
+    ofrak.discover(ofrak_ghidra)
     ofrak.run(main, args.hello_world_file, args.print_kitteh_source, args.output_file_name)
